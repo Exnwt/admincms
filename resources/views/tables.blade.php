@@ -102,6 +102,12 @@
                     <span>transaksi</span></a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="vourcher">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Vourcher</span></a>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -324,7 +330,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Transaction</h1>
                     <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
                         For more information about DataTables, please visit the <a target="_blank"
                             href="https://datatables.net">official DataTables documentation</a>.</p>
@@ -334,7 +340,7 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
                             
-                            <form action="/add_transaction">
+                            <form action="/add_itemsview">
                                 <button type="submit"  class="btn btn-primary" style="display:flex; margin-top:15px;align-content:center;align-items:center;"> <i><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAX0lEQVRIS2NkoDFgpLH5DKMWEAzh4RlE/wn6G6GAYAhgU0BzC0jwAGGlBL1I2Aj8KgYkiMiJA5geDAdTK4gGlwWEggjma6LUkRPJFFtATsocXHEwKH2A01HUygfD2AIAC3AOGYmnO2wAAAAASUVORK5CYII=" style="padding-right:7px; display:flex;"></i> Add Transaction</button>
                             </form> 
                         </div>

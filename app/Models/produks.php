@@ -6,6 +6,7 @@ use App\models\detail_transaksi;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class produks extends Model
 {
     use HasFactory;
@@ -19,5 +20,6 @@ class produks extends Model
     public function produk_kategori(){
         return $this->belongsTo(produk_kategoris::class,'produk_kategori_id','id');
     }
-    public function detail_transaksi(){ return $this->belongsTo(detail_transaksi::class,'products_id','id');}
+    
+    public function detail_transaksi(){ return $this->belongsTo(detail_transaksi::class,'product_id','id');}
 }

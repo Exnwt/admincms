@@ -340,46 +340,45 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
                             
-                            <form action="/addcat" method="post">
+                            <form action="/savdetailtrans">
                                 @csrf
-                                <button type="submit"  class="btn btn-primary" style="display:flex; margin-top:15px;align-content:center;align-items:center;"> <i><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAX0lEQVRIS2NkoDFgpLH5DKMWEAzh4RlE/wn6G6GAYAhgU0BzC0jwAGGlBL1I2Aj8KgYkiMiJA5geDAdTK4gGlwWEggjma6LUkRPJFFtATsocXHEwKH2A01HUygfD2AIAC3AOGYmnO2wAAAAASUVORK5CYII=" style="padding-right:7px; display:flex;"></i> Add Items</button>
-                            
+                                <button type="submit"  class="btn btn-primary" style="display:flex; margin-top:15px;align-content:center;align-items:center;"> <i><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAX0lEQVRIS2NkoDFgpLH5DKMWEAzh4RlE/wn6G6GAYAhgU0BzC0jwAGGlBL1I2Aj8KgYkiMiJA5geDAdTK4gGlwWEggjma6LUkRPJFFtATsocXHEwKH2A01HUygfD2AIAC3AOGYmnO2wAAAAASUVORK5CYII=" style="padding-right:7px; display:flex;"></i> Add Transaction</button>
                             
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Category</th>
-                                            <th>Description</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Category</th>
-                                            <th>Description</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        <tr>
-                                            <td><input class="btn btn-primary"  type="hidden"></td>
-                                            <td><input class="btn btn-primary" placeholder="pls enter items" type="text" name="category"></td>
-                                            <td><input class="btn btn-primary" placeholder="pls enter description" type="text" name="description"></td>
-                                        </tr> 
+                                <thead>
+                                    <tr>
+                                        <th>items</th>
+                                        <th>price</th>
+                                        <th>qty</th>
+                                        <th>total</th>
+                                        <th>voucher</th>
+                                        <th>sub total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+    
+                                        <td>
+                                            <select name="product_id" id="product_id"class="btn btn-primary" type="text">
+                                                @foreach ($listitem as $ll)
+                                                <option id="itemname" value="{{$ll->id}}">{{$ll->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td id="itemname"></td>
+                                        
+                                        <td><input class="btn btn-primary" placeholder="pls enter qty" type="number" min="1" name="description" required></td>
+                                        <td></td>
+                                        <td><input class="btn btn-primary" placeholder="pls enter description" type="text" name="description"></td>
+                                        <td><input class="btn btn-primary" placeholder="pls enter description" type="text" name="description"></td>
+                                    </tr> 
 
-                                        @foreach($produkcat as $produkcats)
-                                        @csrf
-                                        <tr>
-                                            <td>{{$produkcats->id}}</td>
-                                            <td>{{$produkcats->category}}</td>
-                                            <td>{{$produkcats->description}}</td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                            </form>         
+                                </tbody>
+                                </form> 
+         
                                 </table>
                             </div>
                         </div>
@@ -450,4 +449,8 @@
     <script <?php include 'C:\laravel\gudangapps\resources\js\demo\datatables-demo.js'?>></script>
 
 </body>
+<script type="text/javascript">
+    $("#itemname")
+
+</script>
 </html>

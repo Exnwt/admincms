@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Tables</title>
+    <title>SB Admin 2 - transaction </title>
 
     <!-- Custom fonts for this template -->
     <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -100,6 +100,12 @@
                 <a class="nav-link" href="tables">
                     <i class="fas fa-fw fa-table"></i>
                     <span>transaksi</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="vourcher">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Vourcher</span></a>
             </li>
 
             <!-- Divider -->
@@ -324,7 +330,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Add transacition</h1>
                     <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
                         For more information about DataTables, please visit the <a target="_blank"
                             href="https://datatables.net">official DataTables documentation</a>.</p>
@@ -334,13 +340,13 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
                             
-                            <form action="/add_transaction">
+                            <form action="/save_transaction" action="post">
                                 <button type="submit"  class="btn btn-primary" style="display:flex; margin-top:15px;align-content:center;align-items:center;"> <i><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAX0lEQVRIS2NkoDFgpLH5DKMWEAzh4RlE/wn6G6GAYAhgU0BzC0jwAGGlBL1I2Aj8KgYkiMiJA5geDAdTK4gGlwWEggjma6LUkRPJFFtATsocXHEwKH2A01HUygfD2AIAC3AOGYmnO2wAAAAASUVORK5CYII=" style="padding-right:7px; display:flex;"></i> Add Transaction</button>
-                            </form> 
+                            
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" >
                                 <thead>
                                         <tr>
                                             <th>ID</th>
@@ -353,36 +359,16 @@
                                 </thead>
                                 <tbody>
                                         <tr>
-                                            <td><input class="btn btn-primary"  type="hidden"></td>
-                                            <td><input class="btn btn-primary" placeholder="pls enter items" type="hidden" name="category"></td>
-                                            <td><input class="btn btn-primary" placeholder="pls enter description" type="text" name="description" required></td>
-                                            <td><input class="btn btn-primary" placeholder="pls enter description" type="text" name="description" required></td>
-                                            <td><input class="btn btn-primary" placeholder="pls enter description" type="text" name="description" required></td>
+                                            <td><input class="btn btn-primary"  type="hidden"></td> 
+                                            <td><input class="btn btn-primary" type="text" name="transaction_id" required></td>
+                                            <td><input class="btn btn-primary" placeholder="pls enter customer name" type="text" name="customer_name" required></td>
+                                            <td><input class="btn btn-primary" placeholder="pls enter customer email" type="mail" name="customer_email" required></td>
+                                            <td><input class="btn btn-primary" placeholder="pls enter customer phone" type="tel" name="customer_phone" required></td>
                                             <td></td>
                                         </tr> 
 
                                 </tbody>
-                                <thead>
-                                    <tr>
-                                        <th>items</th>
-                                        <th>price</th>
-                                        <th>qty</th>
-                                        <th>total</th>
-                                        <th>voucher</th>
-                                        <th>sub total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                            <td><input class="btn btn-primary" placeholder="pls enter items" type="text" required></td>
-                                            <td></td>
-                                            <td><input class="btn btn-primary" placeholder="pls enter qty" type="number" min="1" name="description" required></td>
-                                            <td></td>
-                                            <td><input class="btn btn-primary" placeholder="pls enter description" type="text" name="description"></td>
-                                            <td><input class="btn btn-primary" placeholder="pls enter description" type="text" name="description"></td>
-                                            
-                                        </tr> 
-                                </tbody>
+                                </form> 
          
                                 </table>
                             </div>

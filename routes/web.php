@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\loginscontroller;
 use App\Http\Controllers\produkcontroller;
 use App\Http\Controllers\transactioncontroller;
+use App\Http\Controllers\vouchercontroller;
 
 
 /*
@@ -45,8 +46,16 @@ route::post('/savproduk',[produkcontroller::class,'produks']);
 route::get('/category',[produkcontroller::class,'produkcat']);
 route::post('/addcat',[produkcontroller::class,'addprodukcat']);
 
-route::get('/add_transaction',[transactioncontroller::class,'addtrans']);
+route::get('/add_transaction',[transactioncontroller::class,'transcustview']);
+route::post('/save_transaction',[transactioncontroller::class,'savetranscust']);
 
+route::get('/add_itemsview',[transactioncontroller::class,'additemsview']);
+
+
+
+route::get('/vourcher',[vouchercontroller::class,'vourcherview']);
+route::get('/add_voucher',[vouchercontroller::class,'addvoucherview']);
+route::post('/addsvou',[vouchercontroller::class,'addsvou']);
 // route::get('/produk',function(){
 //     return view ('produk');
 // });

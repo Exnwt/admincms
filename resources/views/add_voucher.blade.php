@@ -83,7 +83,7 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="category">
+                <a class="nav-link" href="/category">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Produk Kategori</span></a>
             </li>
@@ -95,7 +95,6 @@
             </li>
 
             <!-- Nav Item - Tables -->
-            
             <li class="nav-item">
                 <a class="nav-link" href="tables">
                     <i class="fas fa-fw fa-table"></i>
@@ -330,7 +329,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+                    <h1 class="h3 mb-2 text-gray-800">-- Add voucher -- </h1>
                     <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
                         For more information about DataTables, please visit the <a target="_blank"
                             href="https://datatables.net">official DataTables documentation</a>.</p>
@@ -339,47 +338,43 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-                            
-                            <form action="/addcat" method="post">
+                            <form action="/addsvou" method="post">
                                 @csrf
-                                <button type="submit"  class="btn btn-primary" style="display:flex; margin-top:15px;align-content:center;align-items:center;"> <i><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAX0lEQVRIS2NkoDFgpLH5DKMWEAzh4RlE/wn6G6GAYAhgU0BzC0jwAGGlBL1I2Aj8KgYkiMiJA5geDAdTK4gGlwWEggjma6LUkRPJFFtATsocXHEwKH2A01HUygfD2AIAC3AOGYmnO2wAAAAASUVORK5CYII=" style="padding-right:7px; display:flex;"></i> Add Items</button>
-                            
-                            
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Category</th>
-                                            <th>Description</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Category</th>
-                                            <th>Description</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        <tr>
-                                            <td><input class="btn btn-primary"  type="hidden"></td>
-                                            <td><input class="btn btn-primary" placeholder="pls enter items" type="text" name="category"></td>
-                                            <td><input class="btn btn-primary" placeholder="pls enter description" type="text" name="description"></td>
-                                        </tr> 
+                            <!--    <button type="submit" name="add_button" class="btn btn-primary" style="display:flex; margin-top:15px;align-content:center;align-items:center;"> <i><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAX0lEQVRIS2NkoDFgpLH5DKMWEAzh4RlE/wn6G6GAYAhgU0BzC0jwAGGlBL1I2Aj8KgYkiMiJA5geDAdTK4gGlwWEggjma6LUkRPJFFtATsocXHEwKH2A01HUygfD2AIAC3AOGYmnO2wAAAAASUVORK5CYII=" style="padding-right:7px; display:flex;"></i> Add Items</button>                -->
+                                            <div class="card-body">
+                                       
+                                        <div class="form-group col-md-12">
+                                            <label>Code <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required name="code" autocomplete="off" value="{{ isset($voucher) ? $voucher->code : '' }}">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Type <span class="text-danger">*</span></label>
+                                            <select name="type" class="form-control">
+                                            <option value="0">--- Select Type ---</option>
+                                            <option value="1" {{ (isset($voucher) && $voucher->type == '1') ? 'selected' : '' }}>Flat Discount</option>
+                                            <option value="2" {{ (isset($voucher) && $voucher->type == '2') ? 'selected' : '' }}>Percent Discount</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Discount Value <span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control" required name="disc_value" autocomplete="off" value="{{ isset($voucher) ? $voucher->disc_value : '' }}">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Start Date <span class="text-danger">*</span></label>
+                                            <input type="date" class="form-control" required name="start_date" value="{{ isset($voucher) ? $voucher->start_date : '' }}">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>End Date <span class="text-danger">*</span></label>
+                                            <input type="date" class="form-control" required name="end_date" value="{{ isset($voucher) ? $voucher->end_date : '' }}">
+                                        </div>
+                                        <div class="col-12 text-right">
+                                            <button class="btn btn-primary btn-sm"><i class="fas fa-save"></i> Save</button>
+                                        </div>
+                                        </form>
+                                    </div>
+                            </form>
 
-                                        @foreach($produkcat as $produkcats)
-                                        @csrf
-                                        <tr>
-                                            <td>{{$produkcats->id}}</td>
-                                            <td>{{$produkcats->category}}</td>
-                                            <td>{{$produkcats->description}}</td>
-                                        </tr>
-                                        @endforeach
                                     </tbody>
-                            </form>         
                                 </table>
                             </div>
                         </div>
