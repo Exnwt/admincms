@@ -40,6 +40,7 @@ route::get('/tables',function(){
 });
 
 route::get('/produk',[produkcontroller::class,'produkstab']);
+route::get('/add_produk',[produkcontroller::class,'addprodukview']);
 route::post('/savproduk',[produkcontroller::class,'produks']);
 
 
@@ -48,14 +49,13 @@ route::post('/addcat',[produkcontroller::class,'addprodukcat']);
 
 route::get('/add_transaction',[transactioncontroller::class,'transcustview']);
 route::post('/save_transaction',[transactioncontroller::class,'savetranscust']);
-
 route::get('/add_itemsview',[transactioncontroller::class,'additemsview']);
-
+route::get('/find_price',[transactioncontroller::class,'findprice']);
 
 
 route::get('/vourcher',[vouchercontroller::class,'vourcherview']);
 route::get('/add_voucher',[vouchercontroller::class,'addvoucherview']);
-route::post('/addsvou',[vouchercontroller::class,'addsvou']);
+route::post('/addsvou',[vouchercontroller::class,'adds  vou']);
 // route::get('/produk',function(){
 //     return view ('produk');
 // });

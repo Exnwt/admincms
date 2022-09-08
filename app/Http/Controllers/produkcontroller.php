@@ -40,6 +40,11 @@ class produkcontroller extends Controller
         return view('/produk')->with('produk',$produk)->with('listcategory',$listcategory);
     }
 
+    public function addprodukview(){
+        $listcategory = produk_kategoris::all();
+        return view('add_produk')->with('listcategory',$listcategory);
+    }
+
     public function addprodukcat(request $request){
         $produkscat = new produk_kategoris;
         $produkscat->category = $request->category;
@@ -50,6 +55,7 @@ class produkcontroller extends Controller
 
     }
 
+
     
 
     public function produkcat()
@@ -58,6 +64,8 @@ class produkcontroller extends Controller
 
         return view('produk_category')->with('produkcat',$produkscat);
     }
+
+
 
 
     

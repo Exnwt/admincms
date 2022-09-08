@@ -353,9 +353,9 @@
                                             <th>Code</th>
                                             <th>Type</th>
                                             <th>Discount</th>
-                                            <th>start date</th>
-                                            <th>end date    </th>
+                                            <th>Start Date</th>
                                             <th>Status</th>
+                                            <th>Edits</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -364,11 +364,16 @@
                                         <tr>
                                             <td>{{$pp->id}}</td>
                                             <td>{{$pp->code}}</td>
-                                            <td>{{$pp->type}}</td>
-                                            <td>{{$pp->disc_value}}</td>
-                                            <td>{{$pp->start_date}}</td>
-                                            <td>{{$pp->end_date}}</td>
-                                            <td>{{$pp->status}}</td>
+                                            <td>{{($pp -> type == '1') ? 'flat' : 'Percentage' }}</td>
+                                            <td>{{number_format($pp->disc_value) }}</td>
+                                            <td>
+                                                {{ \Carbon\Carbon::parse($pp->start_date)->format('d M Y') }}
+                                                -
+                                                {{ \Carbon\Carbon::parse($pp->end_date)->format('d M Y') }}
+                                            </td>
+                                            <td>{{($pp->status == '1') ? 'Active' : 'Percentage'}}</td>
+                                            <td style="display:flex; justify-content:center; "><button class="btn btn-primary" style="margin-right:8px;"><i><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAA9klEQVRIS72V3Q2CMBRGe5tA4lvDBI6gC2i6kUzgCDKCmzRu4AY6AembCZIWbiJEoaUtBXku53z3pwBk5QdW5pMoQSWyEwZMeVnYgs4WIBwouSBYK5LbJLMEWjBWU/po2axLbpMECxAOXMpKsB1QKnoJkCI5lPmwVUGCT1vOWimecnnvJUCuJjjKvAXfPW/fk53kJdh2w+UzasgDeMeStVL7KbhXBRY41m7sedAMYuGTFSwBtwqWghsFS8KNgvct06OV8xyoaVVH92AkiIC7K4iEe92D2P+F96diruj/AuMWBcRPjuVPaPcWBcDxqFMQyHMeX30GDVLzbxmxA+FKAAAAAElFTkSuQmCC"/></i></button><button class="btn btn-primary"><i><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAr0lEQVRIS2NkoDFgpLH5DAQt+HU2soCRgbEfm0P+MzAkshkvW4DPkXgt+HUqyoCRmWE/0AABnIb8++fIarriAC55FAt+n40COopywGq8DG4ufS2g3O2YJmCNA3KDCjloYFaNWoAS6KNBRDAVjwbRaBAhQoDmZdGfs1H3gRWDAsFAR1bAyHCB1WiZIboe7IXd6QgHRiam+URbwvj/wP//jAuxVZ8E62SSfIFFMc0tAAD3BFkZmEzXKAAAAABJRU5ErkJggg=="/></i></button></td>
+
                                         </tr>
                                         @endforeach
                             </form>

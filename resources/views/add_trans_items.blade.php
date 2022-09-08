@@ -450,7 +450,9 @@
 
 </body>
 <script type="text/javascript">
-    $("#itemname")
+    $(document).on('change','#itemname',function(){
+        var 
+    });
 
 </script>
 </html>
