@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\detail_transaksi;
 use App\Models\produks;
+use App\Models\vouchers;
 use Illuminate\Http\Request;
 
 
@@ -34,11 +35,13 @@ class transactioncontroller extends Controller
 
     public function additemsview(produks $produks){
         $listitem = produks::all();
+        $listvou = vouchers::all();
         // $pricee = produks::where($listitem->id)->price;
 
-        return view('/add_trans_items')->with('listitem',$listitem);
+        return view('/add_trans_items')->with('listitem',$listitem)->with('listvou',$listvou);
 
     }
+
 
     
 }
