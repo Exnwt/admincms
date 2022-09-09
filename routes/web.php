@@ -53,6 +53,7 @@ route::get('/add_itemsview',[transactioncontroller::class,'additemsview']);
 route::get('/find_price',[transactioncontroller::class,'findprice']);
 
 
+
 route::get('/vourcher',[vouchercontroller::class,'vourcherview']);
 route::get('/add_voucher',[vouchercontroller::class,'addvoucherview']);
 route::post('/addsvou',[vouchercontroller::class,'adds  vou']);

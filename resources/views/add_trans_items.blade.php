@@ -343,7 +343,7 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>   
 
-                                <form action="/savtrans" method="post">
+                                <form action="" >
                                 @csrf
 
                                 <script>
@@ -359,29 +359,36 @@
                                        
                                         <div class="form-group col-md-12" style="display:flex;" >
                                             <label style="margin-right:10px;">Items<span class="text-danger">*</span></label>
-                                            <select style="margin-right:10px;" name="product_id" id="product_id"class="btn btn-primary" type="text">
+                                            <select style="margin-right:10px;" name="dropdown_produk" id="dropdown_produk"class="btn btn-primary" type="text" onchange="getPrice()">
                                                 @foreach ($listitem as $ll)
                                                     <option id="itemname" value="{{$ll->id}}">{{$ll->name}} --  {{number_format($ll->price)}}</option>
-                                                @endforeach
+                                                @endforeach                                   
+             
+                                                <input type="number" class="form-control" required name="qty" id="qtynumber" >
                                             </select>
-                                        
-                                            <label style="margin-right:10px;">Qty<span class="text-danger">*</span></label>
-                                            <input type="number" class="form-control" required name="qty" >
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label>Price  : </label>
-                                            <label for="" id="pricelabel">{{number_format($ll->price)}}</label>
+                                            <label for="" id="pricelabel">0</label>
 
-                                            <button style="margin-left:20px;"class="btn btn-primary">Add Items</button>
+                                            <button style="margin-left:20px;"class="btn btn-primary" onclick="addtrans()">Add Items</button>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>qty  : </label>
+                                            <label for="" id="qtylabel">0</label>
                                         </div>
                                         <div class="table-responsive"> 
                                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                                <tr>
-                                                    <td>Items</td>
-                                                    <td>Qty</td>
-                                                    <td>Total price</td>
-                                                    <td>Sub Total</td>
-                                                </tr>
+                                                <thead>
+                                                    <tr>
+                                                        <td>Items</td>
+                                                        <td>Qty</td>
+                                                        <td>Total price</td>
+                                                        <td>Sub Total</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tablebodytrans">
+                                                </tbody>
                                             </table>
                                         </div>
 
@@ -513,9 +520,69 @@
 
 </body>
 <script type="text/javascript">
-    $(document).on('change','#itemname',function(){
-        var 
-    });
+    const isiTableBody = document.querySelector("#tablebodytrans");
+
+    let produkss = []
+
+
+    const getProduks = async()=>{
+        const response = await fetch('/api/produk/get/all');
+        const data = await response.json();
+        produkss = data;
+    };
+    getProduks()
+
+    const getPrice = ()=>{
+        const selectProduk = document.querySelector("#dropdown_produk")
+
+        const pricedata = document.querySelector("#pricelabel")
+        const newProduk = produkss.find((e)=>e.id == ([...selectProduk.selectedOptions][0].value))
+        pricedata.innerText =  parseInt(newProduk.price);
+    };
+
+    const addtrans = ()=>{
+        const selectProduk = document.querySelector("#dropdown_produk")
+        const qtys = document.querySelector("#qtynumber").value;
+        console.log("ini qty: ",qtys);
+
+        let newItems = produkss.find((e)=>e.id == ([...selectProduk.selectedOptions][0].value))
+        console.log(newItems);
+
+        isiTableBody.innerHTML += `
+            <tr>
+                <td>
+                    <input type="hidden" id="product_id" name="product_id[]" value="${newItems.id}">
+                    <input type="text" id="product_name" name="product_name[]" value="${newItems.name}" readonly>
+                </td>
+                <td>
+                    <input type="number" id="qty" name="qty[]" min="1" onchange="getPrice(this)" onekeydown="updatePrice(this)" value="${qtys}">
+                </td>
+                <td>
+                    <input type="hidden" id="price_satuan" name="price_satuan[]" value="${newItems.price}">
+                    <input type="number" id="price_total" name="price_total[]" value="${newItems.price*qtys}" readonly>
+                    <input type="hidden" id="price_purchase_satuan" name="price_purhase_satuan[]" value="${newItems.purchase_price}">
+                    <input type="hidden" id="price_purchase_total" name="price_purhase_total[]" value="${newItems.purchase_price * qtys}" readonly>
+                </td>
+                <td>
+                    <button type="button" style="margin-left:20px;"class="btn btn-primary" onclick="removeProduk(this)">Remove</button>
+                </td>
+            </tr>
+
+        `
+
+
+
+
+
+
+        
+
+
+
+
+
+    };
+
 
 </script>
 </html>
