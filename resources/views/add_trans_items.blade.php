@@ -579,10 +579,10 @@
     const updatePrice = (e) => {
         const qty = parseInt(e.value);
         const pricetotalTabel = document.querySelector("#price_total")
-
+        const pricetotalan = e.parentElement.parentElement.children[2].children[1];
         const priceSatuan = parseInt(e.parentElement.parentElement.children[2].children[0].value);
-        priceTotal = priceSatuan * qty;
-        pricetotalTabel.value = priceTotal;
+        pricetotalan.value = priceSatuan * qty;
+        // pricetotalTabel.value = priceTotall;
 
     };
 
