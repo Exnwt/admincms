@@ -346,14 +346,14 @@
                                 <form action="" >
                                 @csrf
 
-                                <script>
+                                <!-- <script>
                                     $(document).ready(function (){
                                         $('.selectedOption').on('click',function(){
                                             var price = $(this).find(':selected').data('price');
                                             $('#priceLable').text(price);
                                         })
                                     });
-                                </script>
+                                </script> -->
                             <!--    <button type="submit" name="add_button" class="btn btn-primary" style="display:flex; margin-top:15px;align-content:center;align-items:center;"> <i><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAX0lEQVRIS2NkoDFgpLH5DKMWEAzh4RlE/wn6G6GAYAhgU0BzC0jwAGGlBL1I2Aj8KgYkiMiJA5geDAdTK4gGlwWEggjma6LUkRPJFFtATsocXHEwKH2A01HUygfD2AIAC3AOGYmnO2wAAAAASUVORK5CYII=" style="padding-right:7px; display:flex;"></i> Add Items</button>                -->
                                             <div class="card-body">
                                        
@@ -371,11 +371,7 @@
                                             <label>Price  : </label>
                                             <label for="" id="pricelabel">0</label>
 
-                                            <button style="margin-left:20px;"class="btn btn-primary" onclick="addtrans()">Add Items</button>
-                                        </div>
-                                        <div class="form-group col-md-12">
-                                            <label>qty  : </label>
-                                            <label for="" id="qtylabel">0</label>
+                                            <button type="button" style="margin-left:20px;"class="btn btn-primary" onclick="addtrans()">Add Items</button>
                                         </div>
                                         <div class="table-responsive"> 
                                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -384,7 +380,7 @@
                                                         <td>Items</td>
                                                         <td>Qty</td>
                                                         <td>Total price</td>
-                                                        <td>Sub Total</td>
+                                                        <td>Edits</td>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="tablebodytrans">
@@ -394,12 +390,16 @@
 
                                         <div class="form-group col-md-12">
                                             <label>Vourcher</label>
-                                            <select name="" id="" class="btn btn-primary" style="margin-left:10px;">
+                                            <select name="" id="dropdown_voucher" class="btn btn-primary" style="margin-left:10px;">
                                             <option value="">-- choose voucher --</option>
                                                 @foreach($listvou as $lsvou) 
                                                 <option value="{{$lsvou->id}}">{{$lsvou->code}}</option>
                                                 @endforeach
                                             </select>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>Sub Total : </label>
+                                            <label for="" id="subtotallabel">0</label>
                                         </div>
 
                                         <div class="form-group col-md-12">
@@ -521,8 +521,11 @@
 </body>
 <script type="text/javascript">
     const isiTableBody = document.querySelector("#tablebodytrans");
+    const selectProduk = document.querySelector("#dropdown_produk");
+    const selectvou = document.querySelector("#dropdown_voucher");
 
     let produkss = []
+    let voucherr = []
 
 
     const getProduks = async()=>{
@@ -533,15 +536,17 @@
     getProduks()
 
     const getPrice = ()=>{
-        const selectProduk = document.querySelector("#dropdown_produk")
+        // const selectProduk = document.querySelector("#dropdown_produk")
 
         const pricedata = document.querySelector("#pricelabel")
         const newProduk = produkss.find((e)=>e.id == ([...selectProduk.selectedOptions][0].value))
         pricedata.innerText =  parseInt(newProduk.price);
     };
 
+
+
     const addtrans = ()=>{
-        const selectProduk = document.querySelector("#dropdown_produk")
+        // const selectProduk = document.querySelector("#dropdown_produk")
         const qtys = document.querySelector("#qtynumber").value;
         console.log("ini qty: ",qtys);
 
@@ -551,38 +556,57 @@
         isiTableBody.innerHTML += `
             <tr>
                 <td>
-                    <input type="hidden" id="product_id" name="product_id[]" value="${newItems.id}">
-                    <input type="text" id="product_name" name="product_name[]" value="${newItems.name}" readonly>
+                    <input type="hidden" class="btn btn-primary" id="product_id" name="product_id[]" value="${newItems.id}">
+                    <input type="text" class="btn btn-primary" id="product_name" name="product_name[]" value="${newItems.name}" readonly>
                 </td>
                 <td>
-                    <input type="number" id="qty" name="qty[]" min="1" onchange="getPrice(this)" onekeydown="updatePrice(this)" value="${qtys}">
+                    <input type="number" class="btn btn-primary" id="qty" name="qty[]" min="1" onchange="updatePrice(this)" onekeydown="updatePrice(this)" value="${qtys}">
                 </td>
                 <td>
-                    <input type="hidden" id="price_satuan" name="price_satuan[]" value="${newItems.price}">
-                    <input type="number" id="price_total" name="price_total[]" value="${newItems.price*qtys}" readonly>
-                    <input type="hidden" id="price_purchase_satuan" name="price_purhase_satuan[]" value="${newItems.purchase_price}">
-                    <input type="hidden" id="price_purchase_total" name="price_purhase_total[]" value="${newItems.purchase_price * qtys}" readonly>
+                    <input type="hidden" class="btn btn-primary" id="price_satuan" name="price_satuan[]" value="${newItems.price}">
+                    <input type="text" class="btn btn-primary" id="price_total" name="price_total[]" value="${newItems.price*qtys}" readonly>
+                    <input type="hidden" class="btn btn-primary" id="price_purchase_satuan" name="price_purhase_satuan[]" value="${newItems.purchase_price}">
+                    <input type="hidden" class="btn btn-primary" id="price_purchase_total" name="price_purhase_total[]" value="${newItems.purchase_price * qtys}" readonly>
                 </td>
                 <td>
                     <button type="button" style="margin-left:20px;"class="btn btn-primary" onclick="removeProduk(this)">Remove</button>
                 </td>
             </tr>
-
-        `
-
-
+        ` 
+    };
 
 
+    const updatePrice = (e) => {
+        const qty = parseInt(e.value);
+        const pricetotalTabel = document.querySelector("#price_total")
 
-
-        
-
-
-
-
+        const priceSatuan = parseInt(e.parentElement.parentElement.children[2].children[0].value);
+        priceTotal = priceSatuan * qty;
+        pricetotalTabel.value = priceTotal;
 
     };
 
+    const removeProduk = async(e)=>{
+        e.parentElement.parentElement.remove();
+    };
+
+    const getVoucher = async()=>{
+        const responsee = await fetch('/api/voucher/get/all');
+        const datavou = await responsee.json();
+        voucherr = datavou;
+        console.log(voucherr);
+
+    };
+    getVoucher()
+
+    const selectVou = ()=>{
+        let newVou = voucherr.find((e)=>e.id == ([...selectvou.selectedOptions][0].value))
+        console.log(newVou);
+    };
+    // const chooseVou = ()=> {
+    //     const selectvou = voucherr.find(e)=>e.id == ([...selectvou.selectedOptions[0].value])
+    //     console.log(selectvou);
+    // };
 
 </script>
 </html>

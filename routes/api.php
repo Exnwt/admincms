@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\produks;
+use App\Models\vouchers;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,4 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 route::get('/produk/get/all',function(){
     return response()->json(produks::all());
+});
+
+route::get('voucher/get/all',function(){
+    return response()->json(vouchers::all());
 });
