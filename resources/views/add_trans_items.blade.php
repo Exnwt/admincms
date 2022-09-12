@@ -12,7 +12,7 @@
     <title>SB Admin 2 - Tables</title>
 
     <!-- Custom fonts for this template -->
-    <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+    <!-- <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css"> -->
     <style><?php include 'C:\laravel\gudangapps\vendor\fontawesome-free\css\all.min.css'; ?></style>
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -20,11 +20,11 @@
 
     <!-- Custom styles for this template -->
     <style><?php include 'C:\laravel\gudangapps\resources\css\sb-admin-2.min.css'; ?></style>
-    <link href="{{ asset('asset/css/sb-admin-2.min.css')}}" rel="stylesheet" type="text/css">
+    <!-- <link href="{{ asset('asset/css/sb-admin-2.min.css')}}" rel="stylesheet" type="text/css"> -->
 
     <!-- Custom styles for this page -->
     <style><?php include 'C:\laravel\gudangapps\vendor\datatables\dataTables.bootstrap4.min.css'; ?></style>
-    <link href="{{ asset('asset/vendor/datatables/dataTables.bootstrap4.min.css')}}" type="text/css" rel="stylesheet">
+    <!-- <link href="{{ asset('asset/vendor/datatables/dataTables.bootstrap4.min.css')}}" type="text/css" rel="stylesheet"> -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script text="text/javascript" src="{{asset('/js/jquery-3.6.1.min.js')}}"></script>
 
@@ -359,7 +359,7 @@
                                        
                                         <div class="form-group col-md-12" style="display:flex;" >
                                             <label style="margin-right:10px;">Items<span class="text-danger">*</span></label>
-                                            <select style="margin-right:10px;" name="dropdown_produk" id="dropdown_produk"class="btn btn-primary" type="text" onchange="getPrice()">
+                                            <select style="margin-right:10px;" name="dropdown_produk" id="dropdown_produk"class="btn btn-primary" type="text" onchange="getPrice()" >
                                                 @foreach ($listitem as $ll)
                                                     <option id="itemname" value="{{$ll->id}}">{{$ll->name}} --  {{number_format($ll->price)}}</option>
                                                 @endforeach                                   
@@ -389,6 +389,16 @@
                                         </div>
 
                                         <div class="form-group col-md-12">
+                                            <label>Total Purchase : </label>
+                                            <input for="" id="purchasetotallabel" class="btn btn-primary" onchange="updateTotalPrice()" value="0" readonly>
+                                        </div>
+
+                                        <div class="form-group col-md-12">
+                                            <label>Total : </label>
+                                            <input for="" id="totallabel" class="btn btn-primary" onchange="updateTotalPrice()" value="0" readonly >
+                                        </div>
+
+                                        <div class="form-group col-md-12">
                                             <label>Vourcher</label>
                                             <select name="" id="dropdown_voucher" class="btn btn-primary" style="margin-left:10px;">
                                             <option value="">-- choose voucher --</option>
@@ -399,53 +409,35 @@
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label>Sub Total : </label>
-                                            <label for="" id="subtotallabel">0</label>
+                                            <input for="" id="subtotallabel" class="btn btn-primary" onchange="updateTotalPrice()" value="0" readonly>
                                         </div>
 
                                         <div class="form-group col-md-12">
-                                            <label>Description<span class="text-danger"></span></label>
-                                            <input type="text" class="form-control"  name="description" >
+                                            <label>Customer Name<span class="text-danger"></span></label>
+                                            <input type="text" class="form-control"  name="customer_name" id="customer_name" >
                                         </div>
                                         <div class="form-group col-md-12">
-                                            <label>Short_Description<span class="text-danger"></span></label>
-                                            <input type="text" class="form-control"  name="short_description" >
+                                            <label>Customer Email<span class="text-danger"></span></label>
+                                            <input type="text" class="form-control"  name="customer_email" id="customer_email" >
                                         </div>
 
-                                        <div class="form-group col-md-6">
-                                            <label>Status <span class="text-danger">*</span></label>
-                                            <select name="status" class="form-control">
-                                            <option value="0">--- Select Status ---</option>
-                                            <option value="1" {{ (isset($voucher) && $voucher->type == '1') ? 'selected' : '' }}>Active</option>
-                                            <option value="2" {{ (isset($voucher) && $voucher->type == '2') ? 'selected' : '' }}>Unactive</option>
-                                            </select>
+                                        <div class="form-group col-md-12">
+                                            <label>Customer Phome<span class="text-danger"></span></label>
+                                            <input type="text" class="form-control"  name="customer_phone" id="customer_phone" >
                                         </div>
 
-                                        <div class="form-group col-md-6">
-                                            <label>New Product <span class="text-danger">*</span></label>
-                                            <select name="new_product" class="form-control">
-                                            <option value="0">--- Select Status ---</option>
-                                            <option value="1" {{ (isset($voucher) && $voucher->type == '1') ? 'selected' : '' }}>Active</option>
-                                            <option value="2" {{ (isset($voucher) && $voucher->type == '2') ? 'selected' : '' }}>Unactive</option>
-                                            </select>
+                                        <div class="form-group col-md-12">
+                                            <label>Aditional Request<span class="text-danger"></span></label>
+                                            <input type="text" class="form-control"  name="addtional_request" id="addtional_request" >
                                         </div>
 
-                                        <div class="form-group col-md-6">
-                                            <label>Best Seller <span class="text-danger">*</span></label>
-                                            <select name="best_seller" class="form-control">
-                                            <option value="0">--- Select Status ---</option>
-                                            <option value="1" {{ (isset($voucher) && $voucher->type == '1') ? 'selected' : '' }}>Active</option>
-                                            <option value="2" {{ (isset($voucher) && $voucher->type == '2') ? 'selected' : '' }}>Unactive</option>
-                                            </select>
+                                        <div class="form-group col-md-12">
+                                            <label>Payment Method<span class="text-danger"></span></label>
+                                            <input type="text" class="form-control"  name="payment_method" id="payment_method" >
                                         </div>
 
-                                        <div class="form-group col-md-6">
-                                            <label>Featured <span class="text-danger">*</span></label>
-                                            <select name="featured" class="form-control">
-                                            <option value="0">--- Select Status ---</option>
-                                            <option value="1" {{ (isset($voucher) && $voucher->type == '1') ? 'selected' : '' }}>Active</option>
-                                            <option value="2" {{ (isset($voucher) && $voucher->type == '2') ? 'selected' : '' }}>Unactive</option>
-                                            </select>
-                                        </div>
+ 
+                                        <button type="button" style="margin-left:20px;"class="btn btn-primary" >Make Transaction</button>
 
                                         </form>
          
@@ -520,6 +512,7 @@
 
 </body>
 <script type="text/javascript">
+    const isiTableFoot = document.querySelector("#tablefoottrans");
     const isiTableBody = document.querySelector("#tablebodytrans");
     const selectProduk = document.querySelector("#dropdown_produk");
     const selectvou = document.querySelector("#dropdown_voucher");
@@ -553,26 +546,46 @@
         let newItems = produkss.find((e)=>e.id == ([...selectProduk.selectedOptions][0].value))
         console.log(newItems);
 
-        isiTableBody.innerHTML += `
-            <tr>
-                <td>
-                    <input type="hidden" class="btn btn-primary" id="product_id" name="product_id[]" value="${newItems.id}">
-                    <input type="text" class="btn btn-primary" id="product_name" name="product_name[]" value="${newItems.name}" readonly>
-                </td>
-                <td>
-                    <input type="number" class="btn btn-primary" id="qty" name="qty[]" min="1" onchange="updatePrice(this)" onekeydown="updatePrice(this)" value="${qtys}">
-                </td>
-                <td>
-                    <input type="hidden" class="btn btn-primary" id="price_satuan" name="price_satuan[]" value="${newItems.price}">
-                    <input type="text" class="btn btn-primary" id="price_total" name="price_total[]" value="${newItems.price*qtys}" readonly>
-                    <input type="hidden" class="btn btn-primary" id="price_purchase_satuan" name="price_purhase_satuan[]" value="${newItems.purchase_price}">
-                    <input type="hidden" class="btn btn-primary" id="price_purchase_total" name="price_purhase_total[]" value="${newItems.purchase_price * qtys}" readonly>
-                </td>
-                <td>
-                    <button type="button" style="margin-left:20px;"class="btn btn-primary" onclick="removeProduk(this)">Remove</button>
-                </td>
-            </tr>
-        ` 
+        const trElement = document.createElement('tr');
+
+        trElement.innerHTML += `
+
+            <td>
+
+                <input type="hidden" class="btn btn-primary" id="product_id" name="product_id[]" value="${newItems.id}">
+
+                <input type="text" class="btn btn-primary" id="product_name" name="product_name[]" value="${newItems.name}" readonly>
+
+            </td>
+
+            <td>
+
+                <input type="number" class="btn btn-primary" id="qty" name="qty[]" min="1" onchange="updatePrice(this)" onekeydown="updatePrice(this)" value="${qtys}">
+
+            </td>
+
+            <td>
+
+                <input type="hidden" class="btn btn-primary" id="price_satuan" name="price_satuan[]" value="${newItems.price}">
+
+                <input type="text" class="btn btn-primary" id="price_total" name="price_total[]" onchange="updateTotalPrice()" value="${newItems.price*qtys}" readonly>
+
+                <input type="hidden" class="btn btn-primary" id="price_purchase_satuan" name="price_purhase_satuan[]" value="${newItems.purchase_price}">
+
+                <input type="hidden" class="btn btn-primary" id="price_purchase_total" name="price_purhase_total[]" onchange="updateTotalPrice()" value="${newItems.purchase_price * qtys}" readonly>
+
+            </td>
+
+            <td>
+
+                <button type="button" style="margin-left:20px;"class="btn btn-primary" onclick="removeProduk(this)">Remove</button>
+
+            </td>
+
+        `
+        isiTableBody.appendChild(trElement);
+
+        updateTotal();
     };
 
 
@@ -583,12 +596,16 @@
         const priceSatuan = parseInt(e.parentElement.parentElement.children[2].children[0].value);
         pricetotalan.value = priceSatuan * qty;
         // pricetotalTabel.value = priceTotall;
+        updateTotal();
 
     };
 
     const removeProduk = async(e)=>{
         e.parentElement.parentElement.remove();
     };
+
+
+
 
     const getVoucher = async()=>{
         const responsee = await fetch('/api/voucher/get/all');
@@ -599,14 +616,44 @@
     };
     getVoucher()
 
-    const selectVou = ()=>{
-        let newVou = voucherr.find((e)=>e.id == ([...selectvou.selectedOptions][0].value))
-        console.log(newVou);
-    };
-    // const chooseVou = ()=> {
-    //     const selectvou = voucherr.find(e)=>e.id == ([...selectvou.selectedOptions[0].value])
-    //     console.log(selectvou);
+
+    const updateTotal = () => {
+        const subTotalinput = document.querySelector("#subtotallabel")
+        const totalPurchaseInput = document.querySelector("#purchasetotallabel")
+        const totalInput = document.querySelector("#totallabel")
+
+        let total = 0;
+        let purchasetotal = 0;
+
+        const isitablechildren = [...isiTableBody.children]
+        console.log(isitablechildren)
+        isitablechildren.forEach((e)=>{
+            const price_totall = e.children[2].children[1];
+            const purchase_totalprice = e.children[2].children[3];
+
+            total += parseInt(price_totall.value)
+            purchasetotal += parseInt(purchase_totalprice.value)
+        });
+
+        totalInput.value = total;
+        totalPurchaseInput.value = purchasetotal;
+        
+
+
+
+    };updateTotal();
+
+
+    // const selectVou = ()=>{
+       
+    //     const newVou = voucherr.find((e)=>e.id == ([...selectvou.selectedOptions][0].value))
+    //     console.log(newVou);
+
     // };
 
+
+
+
+    // };
 </script>
 </html>
