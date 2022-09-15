@@ -401,8 +401,8 @@
 
                                             <div class="form-group col-md-12">
                                                 <label>Vourcher</label>
-                                                <select name="" id="dropdown_voucher" class="btn btn-primary" style="margin-left:10px;">
-                                                <option value="">-- choose voucher --</option>
+                                                <select name="" id="dropdown_voucher" class="btn btn-primary" style="margin-left:10px;" onchange="useVoucher(this)">
+                                                <option value="0">-- choose voucher --</option>
                                                     @foreach($listvou as $lsvou) 
                                                     <option value="{{$lsvou->id}}">{{$lsvou->code}}</option>
                                                     @endforeach
@@ -410,7 +410,7 @@
                                             </div>
                                             <div class="form-group col-md-12">
                                                 <label>Sub Total : </label>
-                                                <input for="" id="subtotallabel" class="btn btn-primary" onchange="updateTotalPrice()" value="0" readonly>
+                                                <input for="" id="subtotallabel" class="btn btn-primary" onchange="useVoucher()" value="0" readonly>
                                             </div>
 
                                             <div class="form-group col-md-12">
@@ -561,6 +561,7 @@
         const trElement = document.createElement('tr');
 
 
+
         trElement.innerHTML += `
 
             <td>
@@ -605,6 +606,7 @@
         isiTableBody.appendChild(trElement);
 
         updateTotal();
+        useVoucher();
     };
 
 
@@ -639,7 +641,6 @@
         let purchasetotalan = 0;
 
         const isitablechildren = [...isiTableBody.children]
-        console.log(isitablechildren)
         isitablechildren.forEach((e)=>{
             const price_totall = e.children[2].children[1];
             const purchase_totalprice = e.children[2].children[3];
@@ -650,12 +651,7 @@
 
         totalInput.value = total;
         totalPurchaseInput.value = purchasetotalan;
-        console.log(purchasetotalan,"test");
-
-        const newVou = voucherr.find((e)=>e.id == ([...selectvou.selectedOptions][0].value))
-        console.log(newVou);
-        
-
+    
 
 
     };updateTotal();
@@ -670,13 +666,30 @@
     getVoucher()
 
 
-    const selectVou = ()=>{
-       
-        const newVou = voucherr.find((e)=>e.id == ([...selectvou.selectedOptions][0].value))
-        if (newVou.value != 0 ) {
-            
+    const useVoucher = (e) =>{
+        const totallb = document.querySelector("#totallabel");
+        const totalAll = document.querySelector("#subtotallabel")
+        const isitablechildren = [...isiTableBody.children]
+        let total = 0;
+        isitablechildren.forEach((e)=>{
+            const price_totall = e.children[2].children[1];
+            total += parseInt(price_totall.value)
+        });
+        const selectVou = [...e.selectedOptions][0]
+        console.log(selectVou.value)
+
+        const newVou = voucherr.find((voucher)=>voucher.id == selectVou.value)
+        if(selectVou.value == 0){
+            totalAll.value = total;
+        }else{
+            if(parseInt(totallb.value) !== 0){
+            const subtotal = (newVou.type === 1 ) ? parseInt(totallb.value) - parseInt(newVou.disc_value) : parseInt(totallb.value) * (parseInt(newVou.disc_value)/100);
+            totalAll.value = subtotal
+
         }
-    };
+        }
+
+        };
 
 
 
