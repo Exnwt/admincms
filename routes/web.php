@@ -35,22 +35,23 @@ route::get('/index', function(){
     return view ('index');
 });
 
-route::get('/tables',function(){
-    return view ('tables');
-});
 
 route::get('/produk',[produkcontroller::class,'produkstab']);
 route::get('/add_produk',[produkcontroller::class,'addprodukview']);
 route::post('/savproduk',[produkcontroller::class,'produks']);
+route::get('/produk/delete/{id}',[produkcontroller::class,'produkDelete']);
 
 
 route::get('/category',[produkcontroller::class,'produkcat']);
 route::post('/addcat',[produkcontroller::class,'addprodukcat']);
+route::get('/categorydel/{id}',[produkcontroller::class,'categoryDelete']);
 
+route::get('/tables',[transactioncontroller::class,'listtrans']);
 route::get('/add_transaction',[transactioncontroller::class,'transcustview']);
 route::post('/save_transaction',[transactioncontroller::class,'savetranscust']);
 route::get('/add_itemsview',[transactioncontroller::class,'additemsview']);
 route::get('/find_price',[transactioncontroller::class,'findprice']);
+route::post('/save_trans_items',[transactioncontroller::class,'savetranscust']);
 
 
 

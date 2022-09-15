@@ -40,6 +40,8 @@ class produkcontroller extends Controller
         return view('/produk')->with('produk',$produk)->with('listcategory',$listcategory);
     }
 
+
+
     public function addprodukview(){
         $listcategory = produk_kategoris::all();
         return view('add_produk')->with('listcategory',$listcategory);
@@ -52,11 +54,20 @@ class produkcontroller extends Controller
         $produkscat->save();
 
         return redirect('/category');
-
     }
 
+    public function categoryDelete($id){
+        $catedelete = produk_kategoris::find($id);
+        $catedelete->delete();
+        return redirect('/category');
+    }
 
-    
+    public function produkDelete($id){
+        $delete = produks::find($id);
+        $delete->delete();
+        return redirect('/produk');
+    }
+
 
     public function produkcat()
     {

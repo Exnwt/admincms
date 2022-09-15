@@ -340,9 +340,9 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
                             
-                            <form action="/addcat" method="post">
-                                @csrf
-                                <button type="submit"  class="btn btn-primary" style="display:flex; margin-top:15px;align-content:center;align-items:center;"> <i><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAX0lEQVRIS2NkoDFgpLH5DKMWEAzh4RlE/wn6G6GAYAhgU0BzC0jwAGGlBL1I2Aj8KgYkiMiJA5geDAdTK4gGlwWEggjma6LUkRPJFFtATsocXHEwKH2A01HUygfD2AIAC3AOGYmnO2wAAAAASUVORK5CYII=" style="padding-right:7px; display:flex;"></i> Add Items</button>
+                    <form action="/addcat" method="post">
+                        @csrf
+                        <button type="submit"  class="btn btn-primary" style="display:flex; margin-top:15px;align-content:center;align-items:center;"> <i><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAX0lEQVRIS2NkoDFgpLH5DKMWEAzh4RlE/wn6G6GAYAhgU0BzC0jwAGGlBL1I2Aj8KgYkiMiJA5geDAdTK4gGlwWEggjma6LUkRPJFFtATsocXHEwKH2A01HUygfD2AIAC3AOGYmnO2wAAAAASUVORK5CYII=" style="padding-right:7px; display:flex;"></i> Add Items</button>
                             
                             
                         </div>
@@ -354,32 +354,41 @@
                                             <th>ID</th>
                                             <th>Category</th>
                                             <th>Description</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Category</th>
-                                            <th>Description</th>
-                                        </tr>
-                                    </tfoot>
+
                                     <tbody>
                                         <tr>
                                             <td><input class="btn btn-primary"  type="hidden"></td>
                                             <td><input class="btn btn-primary" placeholder="pls enter items" type="text" name="category"></td>
                                             <td><input class="btn btn-primary" placeholder="pls enter description" type="text" name="description"></td>
+                                            <th></th>
                                         </tr> 
+                                    </tbody>
+                                    </form>  
 
+                                    <tbody>
                                         @foreach($produkcat as $produkcats)
                                         @csrf
-                                        <tr>
-                                            <td>{{$produkcats->id}}</td>
-                                            <td>{{$produkcats->category}}</td>
-                                            <td>{{$produkcats->description}}</td>
-                                        </tr>
+                                            <tr>
+                                                <td>{{$produkcats->id}}</td>
+                                                <td>{{$produkcats->category}}</td>
+                                                <td>{{$produkcats->description}}</td>
+                                                <td style="display:flex;">
+                                                    <form action="/categorydel/{{$produkcats->id}}" method="get">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button class="btn btn-primary"><i><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAr0lEQVRIS2NkoDFgpLH5DAQt+HU2soCRgbEfm0P+MzAkshkvW4DPkXgt+HUqyoCRmWE/0AABnIb8++fIarriAC55FAt+n40COopywGq8DG4ufS2g3O2YJmCNA3KDCjloYFaNWoAS6KNBRDAVjwbRaBAhQoDmZdGfs1H3gRWDAsFAR1bAyHCB1WiZIboe7IXd6QgHRiam+URbwvj/wP//jAuxVZ8E62SSfIFFMc0tAAD3BFkZmEzXKAAAAABJRU5ErkJggg=="/></i></button>
+                                                    </form>
+                                                </td>
+    
+                                            </tr>
                                         @endforeach
                                     </tbody>
-                            </form>         
+
+
+       
                                 </table>
                             </div>
                         </div>

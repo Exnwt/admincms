@@ -12,19 +12,20 @@
     <title>SB Admin 2 - Tables</title>
 
     <!-- Custom fonts for this template -->
-    <!-- <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css"> -->
-    <style><?php include 'C:\laravel\gudangapps\vendor\fontawesome-free\css\all.min.css'; ?></style>
+    <link href="{{ asset('asset/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <style><?php include 'C:\laravel\gudangapps\resources\css\sb-admin-2.min.css'; ?></style>
-    <!-- <link href="{{ asset('asset/css/sb-admin-2.min.css')}}" rel="stylesheet" type="text/css"> -->
+
+    <link href="{{ asset('asset/css/sb-admin-2.min.css')}}" rel="stylesheet" type="text/css">
 
     <!-- Custom styles for this page -->
-    <style><?php include 'C:\laravel\gudangapps\vendor\datatables\dataTables.bootstrap4.min.css'; ?></style>
-    <!-- <link href="{{ asset('asset/vendor/datatables/dataTables.bootstrap4.min.css')}}" type="text/css" rel="stylesheet"> -->
+    
+
+    <link href="{{ asset('asset/vendor/datatables/dataTables.bootstrap4.min.css')}}" type="text/css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script text="text/javascript" src="{{asset('/js/jquery-3.6.1.min.js')}}"></script>
 
@@ -343,9 +344,6 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>   
 
-                                <form action="" >
-                                @csrf
-
                                 <!-- <script>
                                     $(document).ready(function (){
                                         $('.selectedOption').on('click',function(){
@@ -361,6 +359,7 @@
                                             <label style="margin-right:10px;">Items<span class="text-danger">*</span></label>
                                             <select style="margin-right:10px;" name="dropdown_produk" id="dropdown_produk"class="btn btn-primary" type="text" onchange="getPrice()" >
                                                 @foreach ($listitem as $ll)
+                                                    <option value="0">-- choose items --</option>
                                                     <option id="itemname" value="{{$ll->id}}">{{$ll->name}} --  {{number_format($ll->price)}}</option>
                                                 @endforeach                                   
              
@@ -373,73 +372,82 @@
 
                                             <button type="button" style="margin-left:20px;"class="btn btn-primary" onclick="addtrans()">Add Items</button>
                                         </div>
-                                        <div class="table-responsive"> 
-                                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                                <thead>
-                                                    <tr>
-                                                        <td>Items</td>
-                                                        <td>Qty</td>
-                                                        <td>Total price</td>
-                                                        <td>Edits</td>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="tablebodytrans">
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                        <form action="/save_trans_items" method="post">
+                                            @csrf
+                                            <div class="table-responsive"> 
+                                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                    <thead>
+                                                        <tr>
+                                                            <td>Items</td>
+                                                            <td>Qty</td>
+                                                            <td>Total price</td>
+                                                            <td>Edits</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tablebodytrans">
+                                                    </tbody>
+                                                </table>
+                                            </div>
 
-                                        <div class="form-group col-md-12">
-                                            <label>Total Purchase : </label>
-                                            <input for="" id="purchasetotallabel" class="btn btn-primary" onchange="updateTotalPrice()" value="0" readonly>
-                                        </div>
+                                            <div class="form-group col-md-12">
+                                                <label>Total Purchase : </label>
+                                                <input for="" id="purchasetotallabel" class="btn btn-primary" name="total_purchase" value="0" readonly>
+                                            </div>
 
-                                        <div class="form-group col-md-12">
-                                            <label>Total : </label>
-                                            <input for="" id="totallabel" class="btn btn-primary" onchange="updateTotalPrice()" value="0" readonly >
-                                        </div>
+                                            <div class="form-group col-md-12">
+                                                <label>Total : </label>
+                                                <input for="" id="totallabel" class="btn btn-primary" name="total"  value="0" readonly >
+                                            </div>
 
-                                        <div class="form-group col-md-12">
-                                            <label>Vourcher</label>
-                                            <select name="" id="dropdown_voucher" class="btn btn-primary" style="margin-left:10px;">
-                                            <option value="">-- choose voucher --</option>
-                                                @foreach($listvou as $lsvou) 
-                                                <option value="{{$lsvou->id}}">{{$lsvou->code}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-md-12">
-                                            <label>Sub Total : </label>
-                                            <input for="" id="subtotallabel" class="btn btn-primary" onchange="updateTotalPrice()" value="0" readonly>
-                                        </div>
+                                            <div class="form-group col-md-12">
+                                                <label>Vourcher</label>
+                                                <select name="" id="dropdown_voucher" class="btn btn-primary" style="margin-left:10px;">
+                                                <option value="">-- choose voucher --</option>
+                                                    @foreach($listvou as $lsvou) 
+                                                    <option value="{{$lsvou->id}}">{{$lsvou->code}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label>Sub Total : </label>
+                                                <input for="" id="subtotallabel" class="btn btn-primary" onchange="updateTotalPrice()" value="0" readonly>
+                                            </div>
 
-                                        <div class="form-group col-md-12">
-                                            <label>Customer Name<span class="text-danger"></span></label>
-                                            <input type="text" class="form-control"  name="customer_name" id="customer_name" >
-                                        </div>
-                                        <div class="form-group col-md-12">
-                                            <label>Customer Email<span class="text-danger"></span></label>
-                                            <input type="text" class="form-control"  name="customer_email" id="customer_email" >
-                                        </div>
+                                            <div class="form-group col-md-12">
+                                                <label>Customer Name<span class="text-danger"></span></label>
+                                                <input type="text" class="form-control"  name="customer_name" id="customer_name" >
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label>Customer Email<span class="text-danger"></span></label>
+                                                <input type="text" class="form-control"  name="customer_email" id="customer_email" >
+                                            </div>
 
-                                        <div class="form-group col-md-12">
-                                            <label>Customer Phome<span class="text-danger"></span></label>
-                                            <input type="text" class="form-control"  name="customer_phone" id="customer_phone" >
-                                        </div>
+                                            <div class="form-group col-md-12">
+                                                <label>Customer Phome<span class="text-danger"></span></label>
+                                                <input type="text" class="form-control"  name="customer_phone" id="customer_phone" >
+                                            </div>
 
-                                        <div class="form-group col-md-12">
-                                            <label>Aditional Request<span class="text-danger"></span></label>
-                                            <input type="text" class="form-control"  name="addtional_request" id="addtional_request" >
-                                        </div>
+                                            <div class="form-group col-md-12">
+                                                <label>Aditional Request<span class="text-danger"></span></label>
+                                                <input type="text" class="form-control"  name="additional_request" id="additional_request" >
+                                            </div>
 
-                                        <div class="form-group col-md-12">
-                                            <label>Payment Method<span class="text-danger"></span></label>
-                                            <input type="text" class="form-control"  name="payment_method" id="payment_method" >
-                                        </div>
+                                            <div class="form-group col-md-12">
+                                                <label>Payment Method<span class="text-danger"></span></label>
+                                                <input type="text" class="form-control"  name="payment_method" id="payment_method" >
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label>status<span class="text-danger"></span></label>
+                                                <input type="number" class="form-control"  name="status" id="status" value="1" >
+                                            </div>
 
- 
-                                        <button type="button" style="margin-left:20px;"class="btn btn-primary" >Make Transaction</button>
 
+
+
+
+                                            <button type="submit" style="margin-left:20px;"class="btn btn-primary" >Make Transaction</button>
                                         </form>
+
          
                                 </table>
                             </div>
@@ -493,22 +501,25 @@
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script <?php include 'C:\laravel\gudangapps\vendor\jquery\jquery.min.js'?>></script>
-    <script <?php include 'C:\laravel\gudangapps\vendor\bootstrap\js\bootstrap.bundle.min.js'?>></script>
+    <script src="{{ asset('asset/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('asset/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
     <!-- Core plugin JavaScript-->
-    <script <?php include 'C:\laravel\gudangapps\vendor\jquery-easing\jquery.easing.min.js'?>></script>
+    <script src="{{ asset('asset/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 
     <!-- Custom scripts for all pages-->
-    <script <?php include 'C:\laravel\gudangapps\resources\js\sb-admin-2.min.js'?>></script>
+    <script src="{{ asset('asset/js/sb-admin-2.min.js') }}"></script>
 
     <!-- Page level plugins -->
-    <script <?php include 'C:\laravel\gudangapps\vendor\datatables\jquery.dataTables.min.js'?>></script>
-    <script <?php include 'C:\laravel\gudangapps\vendor\datatables\dataTables.bootstrap4.min.js'?>></script>
+    <script src="{{ asset('asset/vendor/chart.js/Chart.min.js') }}"></script>
 
-    <!-- Page level custom scripts -->
-    <script <?php include 'C:\laravel\gudangapps\resources\js\demo\datatables-demo.js'?>></script>
+    <script src="{{asset('asset/vendor/datatables\jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('asset/vendor/datatables\dataTables.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('asset/resources/js\demo\datatables-demo.js')}}"></script>
+
+
+
+
 
 </body>
 <script type="text/javascript">
@@ -533,7 +544,8 @@
 
         const pricedata = document.querySelector("#pricelabel")
         const newProduk = produkss.find((e)=>e.id == ([...selectProduk.selectedOptions][0].value))
-        pricedata.innerText =  parseInt(newProduk.price);
+
+        pricedata.innerText =  Intl.NumberFormat(   ).format(newProduk.price);
     };
 
 
@@ -547,6 +559,7 @@
         console.log(newItems);
 
         const trElement = document.createElement('tr');
+
 
         trElement.innerHTML += `
 
@@ -570,9 +583,9 @@
 
                 <input type="text" class="btn btn-primary" id="price_total" name="price_total[]" onchange="updateTotalPrice()" value="${newItems.price*qtys}" readonly>
 
-                <input type="hidden" class="btn btn-primary" id="price_purchase_satuan" name="price_purhase_satuan[]" value="${newItems.purchase_price}">
+                <input type="hidden" class="btn btn-primary" id="price_purchase_satuan" name="price_purchase_satuan[]" value="${newItems.purchase_price}">
 
-                <input type="hidden" class="btn btn-primary" id="price_purchase_total" name="price_purhase_total[]" onchange="updateTotalPrice()" value="${newItems.purchase_price * qtys}" readonly>
+                <input type="hidden" class="btn btn-primary" id="price_purchase_total" name="price_purchase_total[]" onchange="updateTotalPrice()"  value="${newItems.purchase_price * qtys}" readonly>
 
             </td>
 
@@ -583,6 +596,12 @@
             </td>
 
         `
+        // trElement.innerHTML = `
+        //     <td>
+        //         <input type="hidden" class="btn btn-primary" id="price_satuan" name="price_satuan" value="${newItems.tran}">  
+        //     </td>
+
+        // `
         isiTableBody.appendChild(trElement);
 
         updateTotal();
@@ -591,11 +610,14 @@
 
     const updatePrice = (e) => {
         const qty = parseInt(e.value);
-        const pricetotalTabel = document.querySelector("#price_total")
         const pricetotalan = e.parentElement.parentElement.children[2].children[1];
         const priceSatuan = parseInt(e.parentElement.parentElement.children[2].children[0].value);
         pricetotalan.value = priceSatuan * qty;
-        // pricetotalTabel.value = priceTotall;
+
+        const purchaseTotalupdate = e.parentElement.parentElement.children[2].children[3];
+        const purchaseSatuan = parseInt(e.parentElement.parentElement.children[2].children[2].value);
+        purchaseTotalupdate.value = purchaseSatuan * qty;
+
         updateTotal();
 
     };
@@ -607,6 +629,37 @@
 
 
 
+
+    const updateTotal = () => {
+        const subTotalinput = document.querySelector("#subtotallabel")
+        const totalPurchaseInput = document.querySelector("#purchasetotallabel")
+        const totalInput = document.querySelector("#totallabel")
+
+        let total = 0;
+        let purchasetotalan = 0;
+
+        const isitablechildren = [...isiTableBody.children]
+        console.log(isitablechildren)
+        isitablechildren.forEach((e)=>{
+            const price_totall = e.children[2].children[1];
+            const purchase_totalprice = e.children[2].children[3];
+
+            total += parseInt(price_totall.value)
+            purchasetotalan += parseInt(purchase_totalprice.value)
+        });
+
+        totalInput.value = total;
+        totalPurchaseInput.value = purchasetotalan;
+        console.log(purchasetotalan,"test");
+
+        const newVou = voucherr.find((e)=>e.id == ([...selectvou.selectedOptions][0].value))
+        console.log(newVou);
+        
+
+
+
+    };updateTotal();
+
     const getVoucher = async()=>{
         const responsee = await fetch('/api/voucher/get/all');
         const datavou = await responsee.json();
@@ -617,43 +670,17 @@
     getVoucher()
 
 
-    const updateTotal = () => {
-        const subTotalinput = document.querySelector("#subtotallabel")
-        const totalPurchaseInput = document.querySelector("#purchasetotallabel")
-        const totalInput = document.querySelector("#totallabel")
-
-        let total = 0;
-        let purchasetotal = 0;
-
-        const isitablechildren = [...isiTableBody.children]
-        console.log(isitablechildren)
-        isitablechildren.forEach((e)=>{
-            const price_totall = e.children[2].children[1];
-            const purchase_totalprice = e.children[2].children[3];
-
-            total += parseInt(price_totall.value)
-            purchasetotal += parseInt(purchase_totalprice.value)
-        });
-
-        totalInput.value = total;
-        totalPurchaseInput.value = purchasetotal;
-        
-
-
-
-    };updateTotal();
-
-
-    // const selectVou = ()=>{
+    const selectVou = ()=>{
        
-    //     const newVou = voucherr.find((e)=>e.id == ([...selectvou.selectedOptions][0].value))
-    //     console.log(newVou);
+        const newVou = voucherr.find((e)=>e.id == ([...selectvou.selectedOptions][0].value))
+        if (newVou.value != 0 ) {
+            
+        }
+    };
 
-    // };
 
 
 
 
-    // };
 </script>
 </html>

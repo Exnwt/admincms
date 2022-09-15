@@ -349,7 +349,7 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
+                                            <th>No. Inv</th>
                                             <th>customer name</th>
                                             <th>customer email</th>
                                             <th>customer phone</th>
@@ -361,22 +361,24 @@
                                             <th>status</th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                        <th>ID</th>
-                                            <th>customer name</th>
-                                            <th>customer email</th>
-                                            <th>customer phone</th>
-                                            <th>sub_total</th> <!-- sebelum diskon -->
-                                            <th>total</th>
-                                            <th>total_purchase</th>
-                                            <th>request</th>
-                                            <th>payment metod</th>
-                                            <th>status</th>
-                                        </tr>
-                                    </tfoot>
                                     <tbody>
-
+                                        <tr>
+                                            @foreach($listtrans as $item)
+                                            @csrf
+                                                <tr>
+                                                    <td>{{$item->transaction_id}}</td>
+                                                    <td>{{$item->customer_name}}</td>
+                                                    <td>{{$item->customer_email}}</td>
+                                                    <td>{{$item->customer_phone}}</td>
+                                                    <td>{{number_format($item->sub_total)}}</td>
+                                                    <td>{{number_format($item->total)}}</td>
+                                                    <td>{{number_format($item->total_purchase)}}</td>
+                                                    <td>{{$item->additional_request}}</td>
+                                                    <td>{{$item->payment_method}}</td>
+                                                    <td>{{$item->status}}</td>    
+                                                </tr>
+                                            @endforeach
+                                        </tr>
                                     </tbody>
          
                                 </table>
