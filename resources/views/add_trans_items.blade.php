@@ -358,8 +358,8 @@
                                         <div class="form-group col-md-12" style="display:flex;" >
                                             <label style="margin-right:10px;">Items<span class="text-danger">*</span></label>
                                             <select style="margin-right:10px;" name="dropdown_produk" id="dropdown_produk"class="btn btn-primary" type="text" onchange="getPrice()" >
+                                                <option value="0">-- choose items --</option>
                                                 @foreach ($listitem as $ll)
-                                                    <option value="0">-- choose items --</option>
                                                     <option id="itemname" value="{{$ll->id}}">{{$ll->name}} --  {{number_format($ll->price)}}</option>
                                                 @endforeach                                   
              
@@ -410,7 +410,7 @@
                                             </div>
                                             <div class="form-group col-md-12">
                                                 <label>Sub Total : </label>
-                                                <input for="" id="subtotallabel" class="btn btn-primary" onchange="useVoucher()" value="0" readonly>
+                                                <input for="" id="subtotallabel" name="subtotallabel" class="btn btn-primary" onchange="useVoucher()" value="0" readonly>
                                             </div>
 
                                             <div class="form-group col-md-12">
@@ -438,7 +438,12 @@
                                             </div>
                                             <div class="form-group col-md-12">
                                                 <label>status<span class="text-danger"></span></label>
-                                                <input type="number" class="form-control"  name="status" id="status" value="1" >
+                                                <select name="status" id="status" class="form-control" class="btn btn-primary" >
+                                                    <option value="">-- Choose Status --</option>
+                                                    <option value="1"> Paid </option>
+                                                    <option value="2"> Pending </option>
+                                                </select>
+
                                             </div>
 
 

@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\detail_transaksi;
+
+
 use App\Models\transaksi;
 use App\Models\produks;
 use App\Models\vouchers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Models\detail_transaksi;
 
 
 class transactioncontroller extends Controller
@@ -24,7 +26,7 @@ class transactioncontroller extends Controller
         $savtransak->customer_name = $request->customer_name;
         $savtransak->customer_email=$request->customer_email;
         $savtransak->customer_phone=$request->customer_phone;
-        $savtransak->sub_total =$request->sub_total;
+        $savtransak->sub_total =$request->subtotallabel;
         $savtransak->total = $request->total;
         $savtransak->additional_request =$request->additional_request;
         $savtransak->total_purchase=$request->total_purchase;
@@ -73,6 +75,14 @@ class transactioncontroller extends Controller
     public function listtrans(){
         $listtrans = transaksi::all();
         return view('tables')->with('listtrans',$listtrans);
+    }
+
+    public function detailsView($id){
+
+        $listdetail = detail_transaksi::where('transaction_id',$id)->with('transaksi')->with('produks')->get();
+        
+
+        return view('/detail_table')->with('listdetail',$listdetail);
     }
 
 

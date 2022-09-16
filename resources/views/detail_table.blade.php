@@ -83,13 +83,13 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="category">
+                <a class="nav-link" href="/category">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Produk Kategori</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="produk">
+                <a class="nav-link" href="/produk">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>produk</span></a>
             </li>
@@ -97,13 +97,13 @@
             <!-- Nav Item - Tables -->
             
             <li class="nav-item">
-                <a class="nav-link" href="tables">
+                <a class="nav-link" href="/tables">
                     <i class="fas fa-fw fa-table"></i>
                     <span>transaksi</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="vourcher">
+                <a class="nav-link" href="/vourcher">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Vourcher</span></a>
             </li>
@@ -338,11 +338,8 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Details Transcation</h6>
                             
-                            <form action="/add_itemsview">
-                                <button type="submit"  class="btn btn-primary" style="display:flex; margin-top:15px;align-content:center;align-items:center;"> <i><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAX0lEQVRIS2NkoDFgpLH5DKMWEAzh4RlE/wn6G6GAYAhgU0BzC0jwAGGlBL1I2Aj8KgYkiMiJA5geDAdTK4gGlwWEggjma6LUkRPJFFtATsocXHEwKH2A01HUygfD2AIAC3AOGYmnO2wAAAAASUVORK5CYII=" style="padding-right:7px; display:flex;"></i> Add Transaction</button>
-                            </form> 
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -350,45 +347,27 @@
                                     <thead>
                                         <tr>
                                             <th>No. Inv</th>
-                                            <th>customer name</th>
-                                            <th>customer email</th>
-                                            <th>customer phone</th>
-                                            <th>sub_total</th> <!-- sebelum diskon -->
+                                            <th>Transaction_id</th>
+                                            <th>produk</th>
+                                            <th>qty</th>
+                                            <th>price_satuan</th> <!-- sebelum diskon -->
                                             <th>total</th>
-                                            <th>total_purchase</th>
-                                            <th>request</th>
-                                            <th>payment metod</th>
-                                            <th>status</th>
-                                            <th>Info</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach($listdetail as $lsdetail)
                                         <tr>
-                                            @foreach($listtrans as $item)
-                                            @csrf
-                                                <tr>
-                                                    <td>{{$item->transaction_id}}</td>
-                                                    <td>{{$item->customer_name}}</td>
-                                                    <td>{{$item->customer_email}}</td>
-                                                    <td>{{$item->customer_phone}}</td>
-                                                    <td>{{number_format($item->sub_total)}}</td>
-                                                    <td>{{number_format($item->total)}}</td>
-                                                    <td>{{number_format($item->total_purchase)}}</td>
-                                                    <td>{{$item->additional_request}}</td>
-                                                    <td>{{$item->payment_method}}</td>
-                                                    <td>@if($item->status == 1)Paid
-                                                        @elseif($item->status == 2 )pending
-                                                        @else canceled
-                                                        @endif
-                                                        
-                                                    </td>
-                                                    
-                                                    <form action="/detail/transaction/{{$item->id}}">
-                                                        <td><button class="btn btn-primary" type="submit">Details</button></td>   
-                                                    </form>
-                                                </tr>
-                                            @endforeach
+                                            <td>{{$lsdetail->transaksi->transaction_id}}</td>
+                                            <td>{{$lsdetail -> transaction_id}}</td>
+                                            <td>{{$lsdetail->produks->name}}</td>
+                                            <td>{{$lsdetail->qty}}</td>
+                                            <td>{{number_format($lsdetail->price_satuan)}}</td>
+                                            <td>{{number_format($lsdetail->price_total)}}</td>
                                         </tr>
+
+                                        @endforeach
+                                        <td>Sub Total :</td> 
+                                        <td>{{number_format($lsdetail-> transaksi->sub_total)}}</td>   
                                     </tbody>
          
                                 </table>

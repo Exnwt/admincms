@@ -54,6 +54,8 @@ route::get('/find_price',[transactioncontroller::class,'findprice']);
 route::post('/save_trans_items',[transactioncontroller::class,'savetranscust']);
 
 
+route::get('detail/transaction/{id}',[transactioncontroller::class,'detailsView']);
+
 
 route::get('/vourcher',[vouchercontroller::class,'vourcherview']);
 route::get('/add_voucher',[vouchercontroller::class,'addvoucherview']);
