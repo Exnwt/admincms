@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('detail_transaksi', function (Blueprint $table) {
+        Schema::create('detail_transaksis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('transaction_id')->references('id')->on('transaksi');
+            $table->foreignId('transaction_id')->references('id')->on('transaksis');
             $table->foreignId('product_id')->references('id')->on('produks');
             $table->integer('qty');
             $table->decimal('price_satuan');

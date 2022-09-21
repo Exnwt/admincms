@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('voucher_usages', function (Blueprint $table) {
+        schema::create('authorizes', function (Blueprint $table){
             $table->id();
-            $table->foreignId('transaction_id')->references('id')->on('transaksis');
-            $table->foreignId('vouchers_id')->references('id')->on('vouchers');
-            $table->decimal('discounted_value');
+            $table->foreignId('role_id')->references('id')->on('roles');
+            $table->foreignId('authorize_type_id')->references('id')->on('authorize_types');
+            $table->foreignId('menu_id')->references('id')->on('menus');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        schema::dropIfExists('authorizes');
     }
 };

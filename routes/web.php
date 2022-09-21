@@ -6,6 +6,7 @@ use App\Http\Controllers\loginscontroller;
 use App\Http\Controllers\produkcontroller;
 use App\Http\Controllers\transactioncontroller;
 use App\Http\Controllers\vouchercontroller;
+use App\Http\Controllers\rolecontrol;
 
 
 /*
@@ -27,7 +28,7 @@ Route::get('/welcome', function () {
 //     return view ('login');
 // });
 
-route::get('/',[loginscontroller::class,'login']);
+route::get('/',[loginscontroller::class,'login'])->name('login');
 
 route::post('/logincek',[loginscontroller::class,'logincek']);
 
@@ -36,30 +37,33 @@ route::get('/index', function(){
 });
 
 
-route::get('/produk',[produkcontroller::class,'produkstab']);
-route::get('/add_produk',[produkcontroller::class,'addprodukview']);
-route::post('/savproduk',[produkcontroller::class,'produks']);
-route::get('/produk/delete/{id}',[produkcontroller::class,'produkDelete']);
+route::get('/produk',[produkcontroller::class,'produkstab'])->middleware('auth');
+route::get('/add_produk',[produkcontroller::class,'addprodukview'])->middleware('auth');
+route::post('/savproduk',[produkcontroller::class,'produks'])->middleware('auth');
+route::get('/produk/delete/{id}',[produkcontroller::class,'produkDelete'])->middleware('auth');
 
 
-route::get('/category',[produkcontroller::class,'produkcat']);
-route::post('/addcat',[produkcontroller::class,'addprodukcat']);
-route::get('/categorydel/{id}',[produkcontroller::class,'categoryDelete']);
+route::get('/category',[produkcontroller::class,'produkcat'])->middleware('auth');
+route::post('/addcat',[produkcontroller::class,'addprodukcat'])->middleware('auth');
+route::get('/categorydel/{id}',[produkcontroller::class,'categoryDelete'])->middleware('auth');
 
-route::get('/tables',[transactioncontroller::class,'listtrans']);
-route::get('/add_transaction',[transactioncontroller::class,'transcustview']);
-route::post('/save_transaction',[transactioncontroller::class,'savetranscust']);
-route::get('/add_itemsview',[transactioncontroller::class,'additemsview']);
-route::get('/find_price',[transactioncontroller::class,'findprice']);
-route::post('/save_trans_items',[transactioncontroller::class,'savetranscust']);
-
-
-route::get('detail/transaction/{id}',[transactioncontroller::class,'detailsView']);
+route::get('/tables',[transactioncontroller::class,'listtrans'])->middleware('auth');
+route::get('/add_transaction',[transactioncontroller::class,'transcustview'])->middleware('auth');
+route::post('/save_transaction',[transactioncontroller::class,'savetranscust'])->middleware('auth');
+route::get('/add_itemsview',[transactioncontroller::class,'additemsview'])->middleware('auth');
+route::get('/find_price',[transactioncontroller::class,'findprice'])->middleware('auth');
+route::post('/save_trans_items',[transactioncontroller::class,'savetranscust'])->middleware('auth');
 
 
-route::get('/vourcher',[vouchercontroller::class,'vourcherview']);
-route::get('/add_voucher',[vouchercontroller::class,'addvoucherview']);
-route::post('/addsvou',[vouchercontroller::class,'adds  vou']);
+route::get('detail/transaction/{id}',[transactioncontroller::class,'detailsView'])->middleware('auth');
+
+
+route::get('/vourcher',[vouchercontroller::class,'vourcherview'])->middleware('auth');
+route::get('/add_voucher',[vouchercontroller::class,'addvoucherview'])->middleware('auth');
+route::post('/addsvou',[vouchercontroller::class,'addsvou'])->middleware('auth');
+
+
+route::get('/roles',[rolecontrol::class,'view']);
 // route::get('/produk',function(){
 //     return view ('produk');
 // });

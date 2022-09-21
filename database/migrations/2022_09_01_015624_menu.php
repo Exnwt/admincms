@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('voucher_usages', function (Blueprint $table) {
+        schema::create('menus', function (Blueprint $table){
             $table->id();
-            $table->foreignId('transaction_id')->references('id')->on('transaksis');
-            $table->foreignId('vouchers_id')->references('id')->on('vouchers');
-            $table->decimal('discounted_value');
+            $table->string('menu_name');
+            $table->string('route');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        schema::dropIfExists('menus');
     }
 };

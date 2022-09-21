@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('admins', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('roles_id')->references('id')->on('roles');
             $table->string('username');
             $table->string('password');
             $table->string('remember_token')->nullable;

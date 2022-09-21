@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\produks;
 use App\Models\vouchers;
+use App\Models\authorize;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +29,8 @@ route::get('/produk/get/all',function(){
 route::get('voucher/get/all',function(){
     return response()->json(vouchers::all());
 });
+
+route::get('authorize/get/all',function(){
+    return response()->json(authorize::all());
+});
+
