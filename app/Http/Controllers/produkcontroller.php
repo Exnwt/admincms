@@ -6,10 +6,14 @@ use App\Models\produks;
 use App\Models\produk_kategoris;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\authorize;
+use App\Models\admins;
 
 
 class produkcontroller extends Controller
 {
+    // public variable isi
+    // panggil nya get($this nama variabel)
 
     public function produks(request $request){
         // dd($request->all());
@@ -35,9 +39,20 @@ class produkcontroller extends Controller
 
     public function produkstab()
     {
-        $listcategory = produk_kategoris::all();
-        $produk = produks::with('produk_kategori')->get();
-        return view('/produk')->with('produk',$produk)->with('listcategory',$listcategory);
+        $autho = authorize::all();
+        $adminss = new admins;
+        $userlog = auth()->user();
+        $authotypeview = 1;
+        $statuss = authorize::where('authorize_type_id',$authotypeview)->where('role_id',$userlog->roles_id)->where('menu_id', 1)->get('status');
+        if($statuss = '1'){   
+            $listcategory = produk_kategoris::all();
+            $produk = produks::with('produk_kategori')->get();
+            return view('/produk')->with('produk',$produk)->with('listcategory',$listcategory);
+        }
+        elseif($statuss = '0'){
+            return redirect('/category');
+        }
+
     }
 
 

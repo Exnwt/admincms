@@ -337,15 +337,14 @@
                                     <thead>
                                         <tr>
                                             <th>menu</th>
-                                            <th>view</th>
-                                            <th>add</th>
-                                            <th>eidt</th>
-                                            <th>delete</th>
+                                            @foreach($authotype as $type)
+                                                <th id="authotype" value="{{$type->id}}">{{$type -> type_name}}</th>
+                                            @endforeach
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($menuu as $menu)
-                                        <tr name="authotype" id="authotype">
+                                        <tr name="authotypetabel" id="authotypetabel">
                                             <td name="menu_name" value="{{$menu->id}}" id="menu_name">{{$menu->menu_name}}</td>   
                                         </tr>
                                         @endforeach
@@ -425,6 +424,7 @@
 <script>
 
     let autho = []
+    let role = []
 
         const getAuthorize = async()=>{
         const response = await fetch('/api/authorize/get/all');
@@ -434,18 +434,25 @@
 
     }; getAuthorize();
 
+    const getAccount = async()=>{
+        const response = await fetch('api/role/get/all');
+        const accoun = await response.json();
+        role = accoun
+    }; getAccount();
+
+    
+
     const getAutotype = ()=>{
-        const selectAcc = document.querySelector('#account_id')
-        const tabel = document.querySelector('#authotype');
+        const selectAcc = document.querySelector('#account_id');
+        const type = document.querySelector('#authotype')
+        const tabel = document.querySelector('#authotypetabel');
 
-        let newtype = autho.find((e)=>e.id = (selectAcc.selectedOptions[0].value))
-        console.log(newtype);
+        const newrole = role.find((e)=>e.id = (selectAcc.selectedOptions[0].value))
+    
+        console.log(newrole, "ini newrole");
 
-        const tdElement = document.createElement('td');
-
-        tdElement.innerHTML +=`
-            
-        `
+        const newtype = autho.find('role_id') = newrole
+        console.log(newtype,"ini newtype")
 
     }
 

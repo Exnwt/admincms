@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\user as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\role;
 
 class admins extends Authenticatable
 {
@@ -20,6 +21,7 @@ class admins extends Authenticatable
     protected $fillable = [
         'username',
         'password',
+        'roles_id',
     ];
 
     /**
@@ -40,4 +42,8 @@ class admins extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function roles(){
+        return $this->belongsTo(role::class,'roles_id','id');
+    }
 }

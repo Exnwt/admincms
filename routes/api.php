@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\produks;
 use App\Models\vouchers;
 use App\Models\authorize;
+use App\Models\authorizeType;
 
 
 /*
@@ -32,5 +33,9 @@ route::get('voucher/get/all',function(){
 
 route::get('authorize/get/all',function(){
     return response()->json(authorize::all());
+});
+
+route::get('role/get/all',function(){
+    return response()->json(authorizeType::all());
 });
 

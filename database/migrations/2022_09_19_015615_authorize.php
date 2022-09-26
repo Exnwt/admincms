@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('role_id')->references('id')->on('roles');
             $table->foreignId('authorize_type_id')->references('id')->on('authorize_types');
             $table->foreignId('menu_id')->references('id')->on('menus');
+            $table->bigInt('status');
             $table->timestamps();
         });
     }
