@@ -10,16 +10,47 @@ use App\Models\vouchers;
 class vouchercontroller extends Controller
 {
     public function vourcherview(){
-        $vouc = vouchers::all();
-        return view('vourcher')->with('vouc',$vouc);
+        $autho = authorize::all();
+        $userlog = auth()->user();
+        $authotypeview = 1;
+        $menuproduk = 4;
+        $statuss = authorize::where('authorize_type_id',$authotypeview)->where('role_id',$userlog->roles_id)->where('menu_id', $menuproduk)->first('status');
+
+        if($statuss->status == 1){   
+            $vouc = vouchers::all();
+            return view('vourcher')->with('vouc',$vouc);
+        }
+        else{
+            return redirect('/NO_Authorize');
+        }
+
     }
 
     public function addvoucherview(){
-        return view('add_voucher');
+        $autho = authorize::all();
+        $userlog = auth()->user();
+        $authotypeview = 2;
+        $menuproduk = 4;
+        $statuss = authorize::where('authorize_type_id',$authotypeview)->where('role_id',$userlog->roles_id)->where('menu_id', $menuproduk)->first('status');
+
+        if($statuss->status == 1){   
+            return view('add_voucher');
+        }
+        else{
+            return redirect('/NO_Authorize');
+        }
+
     }
 
     public function addsvou(request $request){
-        if(!$request->filled('code')) throw new \Exception('Code field must be filled');
+        $autho = authorize::all();
+        $userlog = auth()->user();
+        $authotypeview = 2;
+        $menuproduk = 4;
+        $statuss = authorize::where('authorize_type_id',$authotypeview)->where('role_id',$userlog->roles_id)->where('menu_id', $menuproduk)->first('status');
+
+        if($statuss->status == 1){   
+            if(!$request->filled('code')) throw new \Exception('Code field must be filled');
             if(!$request->filled('type') || $request->type == '0') throw new \Exception('Type field must be filled');
             if(!$request->filled('disc_value') || $request->disc_value < 1) throw new \Exception('Discount Value field must be filled');
             if(!$request->filled('start_date')) throw new \Exception('Start Date field must be filled');
@@ -58,6 +89,11 @@ class vouchercontroller extends Controller
         $voucher->save();
 
         return redirect('vourcher');
+        }
+        else{
+            return redirect('/NO_Authorize');
+        }
+
 
     }
 

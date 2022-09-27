@@ -64,6 +64,8 @@ route::post('/addsvou',[vouchercontroller::class,'addsvou'])->middleware('auth')
 
 
 route::get('/roles',[rolecontrol::class,'view']);
+
+route::get('/NO_Authorize',[rolecontrol::class,'noacces']);
 // route::get('/produk',function(){
 //     return view ('produk');
 // });
